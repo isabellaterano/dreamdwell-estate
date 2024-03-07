@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import SwiperCore from "swiper";
-import "swiper/css/bundle";
 import ListingItem from "../components/ListingItem";
 import Hero from "../components/Hero";
 
@@ -11,7 +7,6 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  SwiperCore.use([Navigation]);
 
   useEffect(() => {
     const fetchOfferListings = async () => {
@@ -51,23 +46,6 @@ export default function Home() {
     <div>
       <Hero />
       <section>
-        <Swiper navigation>
-          {offerListings &&
-            offerListings.length > 0 &&
-            offerListings.map((listing) => (
-              <SwiperSlide key={listing.id}>
-                <div
-                  style={{
-                    background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                    backgroundSize: "cover",
-                  }}
-                  className="h-[500px]"
-                  key={listing._id}
-                ></div>
-              </SwiperSlide>
-            ))}
-        </Swiper>
-
         <div className="mx-auto my-10 flex max-w-6xl flex-col gap-8 p-3">
           {offerListings && offerListings.length > 0 && (
             <div className="">
