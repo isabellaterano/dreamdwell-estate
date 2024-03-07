@@ -5,7 +5,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="grid min-h-svh w-full items-center justify-end bg-[url('src/assets/hero.jpg')] bg-cover bg-center">
+    <section className="grid min-h-svh w-full items-center justify-end bg-[url('/hero.jpg')] bg-cover bg-center">
       <div className="m-8 flex flex-col items-center justify-center">
         <h1 className="mb-8 text-center text-3xl font-semibold italic tracking-wide text-slate-900 md:text-5xl">
           Unlock Your
