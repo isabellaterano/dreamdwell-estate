@@ -12,7 +12,7 @@ const Footer = () => {
     <footer className="bottom-0  w-full bg-slate-950">
       <div className="flex h-32 flex-col items-center justify-center ">
         <div className="flex items-center justify-center pb-4">
-          <img src="src\assets\house.svg" alt="logo" width={50} />
+          <img src="/house.svg" alt="logo" width={50} />
           <h2 className="text-slate-50">DreamDwell</h2>
         </div>
 

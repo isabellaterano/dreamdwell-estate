@@ -6,7 +6,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import house from "../assets/house.svg";
+import house from "/house.svg";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
