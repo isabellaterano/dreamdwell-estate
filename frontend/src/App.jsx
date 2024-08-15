@@ -11,6 +11,7 @@ import Listing from "./pages/Listing";
 import Search from "./pages/Search";
 import { register } from "swiper/element/bundle";
 import Footer from "./components/Footer";
+import AboutUs from "./pages/About";
 
 register();
 
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
         <Route path="/listing/:listingId" element={<Listing />} />
+        <Route path="/about" element={<AboutUs />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import {
   getDownloadURL,
@@ -16,7 +16,6 @@ import {
   deleteUserSuccess,
   signOutUserStart,
 } from "../redux/user/userSlice";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Profile() {
@@ -77,11 +76,10 @@ export default function Profile() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (data.success === false) {
+      if (!data.success) {
         dispatch(updateUserFailure(data.message));
         return;
       }
-
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch (error) {
@@ -96,7 +94,7 @@ export default function Profile() {
         method: "DELETE",
       });
       const data = await res.json();
-      if (data.success === false) {
+      if (!data.success) {
         dispatch(deleteUserFailure(data.message));
         return;
       }
@@ -111,13 +109,13 @@ export default function Profile() {
       dispatch(signOutUserStart());
       const res = await fetch("/backend/auth/signout");
       const data = await res.json();
-      if (data.success === false) {
+      if (!data.success) {
         dispatch(deleteUserFailure(data.message));
         return;
       }
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(deleteUserFailure(data.message));
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -126,11 +124,10 @@ export default function Profile() {
       setShowListingsError(false);
       const res = await fetch(`/backend/user/listings/${currentUser._id}`);
       const data = await res.json();
-      if (data.success === false) {
+      if (!data.success) {
         setShowListingsError(true);
         return;
       }
-
       setUserListings(data);
     } catch (error) {
       setShowListingsError(true);
@@ -143,11 +140,10 @@ export default function Profile() {
         method: "DELETE",
       });
       const data = await res.json();
-      if (data.success === false) {
+      if (!data.success) {
         console.log(data.message);
         return;
       }
-
       setUserListings((prev) =>
         prev.filter((listing) => listing._id !== listingId),
       );
@@ -155,6 +151,7 @@ export default function Profile() {
       console.log(error.message);
     }
   };
+
   return (
     <div className="mx-auto max-w-lg p-3">
       <h1 className="my-7 text-center text-3xl font-semibold">Profile</h1>
@@ -187,26 +184,26 @@ export default function Profile() {
         </p>
         <input
           type="text"
-          placeholder="username"
+          placeholder="Username"
           defaultValue={currentUser.username}
           id="username"
-          className="rounded-lg border p-3"
+          className="rounded-lg border p-3 focus:border-orange-600 focus:outline-none"
           onChange={handleChange}
         />
         <input
           type="email"
-          placeholder="email"
+          placeholder="Email"
           id="email"
           defaultValue={currentUser.email}
-          className="rounded-lg border p-3"
+          className="rounded-lg border p-3 focus:border-orange-600 focus:outline-none"
           onChange={handleChange}
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           onChange={handleChange}
           id="password"
-          className="rounded-lg border p-3"
+          className="rounded-lg border p-3 focus:border-orange-600 focus:outline-none"
         />
         <button
           disabled={loading}
@@ -233,21 +230,23 @@ export default function Profile() {
         </span>
       </div>
 
-      <p className="mt-5 text-red-700">{error ? error : ""}</p>
-      <p className="mt-5 text-green-700">
-        {updateSuccess ? "User is updated successfully!" : ""}
-      </p>
+      {error && <p className="mt-5 text-center text-red-700">{error}</p>}
+      {updateSuccess && (
+        <p className="mt-5 text-center text-green-700">
+          User is updated successfully!
+        </p>
+      )}
       <button
         onClick={handleShowListings}
         className="mt-6 w-full rounded-lg bg-slate-700 p-3 text-center uppercase text-white hover:opacity-95"
       >
         Show Listings
       </button>
-      <p className="mt-5 text-red-700">
-        {showListingsError ? "Error showing listings" : ""}
-      </p>
+      {showListingsError && (
+        <p className="mt-5 text-center text-red-700">Error showing listings</p>
+      )}
 
-      {userListings && userListings.length > 0 && (
+      {userListings.length > 0 && (
         <div className="flex flex-col gap-4">
           <h1 className="mt-7 text-center text-2xl font-semibold">
             Your Listings
@@ -265,7 +264,7 @@ export default function Profile() {
                 />
               </Link>
               <Link
-                className="flex-1 truncate  font-semibold text-slate-700 hover:underline"
+                className="flex-1 truncate font-semibold text-slate-700 hover:underline"
                 to={`/listing/${listing._id}`}
               >
                 <p>{listing.name}</p>

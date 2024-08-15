@@ -41,47 +41,54 @@ export default function SignUp() {
       setError(error.message);
     }
   };
-  return (
-    <div className="mx-auto max-w-lg p-3">
-      <h1 className="my-7 text-center text-3xl font-semibold">Sign Up</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="username"
-          className="rounded-lg border p-3"
-          id="username"
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          placeholder="email"
-          className="rounded-lg border p-3"
-          id="email"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          className="rounded-lg border p-3"
-          id="password"
-          onChange={handleChange}
-        />
 
-        <button
-          disabled={loading}
-          className="rounded-lg bg-slate-700 p-3 uppercase text-white hover:opacity-95 disabled:opacity-80"
-        >
-          {loading ? "Loading..." : "Sign Up"}
-        </button>
-        <OAuth />
-      </form>
-      <div className="mt-5 flex gap-2">
-        <p>Have an account?</p>
-        <Link to={"/sign-in"}>
-          <span className="text-blue-700">Sign in</span>
-        </Link>
+  return (
+    <div className="flex h-screen items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+        <h1 className="my-7 text-center text-3xl font-semibold text-gray-800">
+          Sign Up
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <input
+            type="text"
+            placeholder="Username"
+            className="rounded-lg border border-gray-300 p-3 focus:border-orange-600 focus:outline-none"
+            id="username"
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="rounded-lg border border-gray-300 p-3 focus:border-orange-600 focus:outline-none"
+            id="email"
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="rounded-lg border border-gray-300 p-3 focus:border-orange-600 focus:outline-none"
+            id="password"
+            onChange={handleChange}
+          />
+
+          <button
+            disabled={loading}
+            className="rounded-lg bg-orange-600 p-3 uppercase text-white hover:opacity-95 disabled:opacity-80"
+          >
+            {loading ? "Loading..." : "Sign Up"}
+          </button>
+          <OAuth />
+        </form>
+        <div className="mt-5 flex justify-center gap-2 text-gray-700">
+          <p>Have an account?</p>
+          <Link to="/sign-in">
+            <span className="font-medium text-orange-600 hover:underline">
+              Sign in
+            </span>
+          </Link>
+        </div>
+        {error && <p className="mt-5 text-center text-red-600">{error}</p>}
       </div>
-      {error && <p className="mt-5 text-red-500">{error}</p>}
     </div>
   );
 }
